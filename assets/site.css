@@ -16,7 +16,7 @@ h2{font-size:20px;font-weight:600;margin:32px 0 12px;border-bottom:1px solid var
 .btn:hover,.btn:focus{background:var(--ink);color:var(--paper)}
 .btn.main{background:var(--ink);color:var(--paper)}.btn.main:hover{background:var(--water);border-color:var(--water)}
 .older{font-size:13px;color:var(--proxy);margin:6px 0 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:18px}
 .card{margin:0;border:1px solid var(--rule);background:var(--ground)}
 .card button{display:block;width:100%;padding:0;border:0;background:var(--paper);cursor:zoom-in}
 .card img{display:block;width:100%;height:auto;aspect-ratio:17/11}

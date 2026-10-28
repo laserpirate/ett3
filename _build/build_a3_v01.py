@@ -113,7 +113,7 @@ h2{font-size:20px;font-weight:600;margin:32px 0 12px;border-bottom:1px solid var
 .btn:hover,.btn:focus{background:var(--ink);color:var(--paper)}
 .btn.main{background:var(--ink);color:var(--paper)}.btn.main:hover{background:var(--water);border-color:var(--water)}
 .older{font-size:13px;color:var(--proxy);margin:6px 0 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%%),1fr));gap:18px}
 .card{margin:0;border:1px solid var(--rule);background:var(--ground)}
 .card button{display:block;width:100%%;padding:0;border:0;background:var(--paper);cursor:zoom-in}
 .card img{display:block;width:100%%;height:auto;aspect-ratio:17/11}
@@ -274,8 +274,13 @@ def shots():
         while os.path.exists(out):  # never overwrite
             n += 1
             out = re.sub(r"_v\d+\.png$", "_v%02d.png" % n, out)
-        subprocess.run([chrome, "--headless=new", "--hide-scrollbars", "--window-size=%d,%d" % (w, h), "--virtual-time-budget=15000",
-                        "--screenshot=" + out, BASE + "a3-groundtruth/"], capture_output=True, timeout=120)
+        # headless Chrome clamps windows to about 500 px, so the page is framed at exactly w px and the shot cropped to it
+        frame = os.path.join(os.environ.get("TEMP", "."), "ett3_shot_%d.html" % w)
+        open(frame, "w").write('<!doctype html><body style="margin:0"><iframe src="%sa3-groundtruth/" style="width:%dpx;height:%dpx;border:0;display:block"></iframe>' % (BASE, w, h))
+        subprocess.run([chrome, "--headless=new", "--hide-scrollbars", "--window-size=%d,%d" % (max(w, 800), h), "--virtual-time-budget=15000",
+                        "--screenshot=" + out, "file:///" + frame.replace("\\", "/")], capture_output=True, timeout=120)
+        if os.path.exists(out):
+            Image.open(out).crop((0, 0, w, h)).save(out)
         print("shot", out, os.path.exists(out))
 
 
