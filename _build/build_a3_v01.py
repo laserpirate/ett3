@@ -240,14 +240,14 @@ def check_live(files):
             continue
         for f in fs:
             rp = os.path.relpath(os.path.join(root, f), SITE).replace("\\", "/")
-            if rp.startswith(".") or rp in ("README.md",) or rp.endswith("index.html"):
+            if rp.startswith(".") or rp in ("README.md", "robots.txt") or rp.endswith("index.html"):
                 continue
             urls.append(BASE + rp)
     ok, n = 0, 0
     for u in urls:
         n += 1
         try:
-            req = urllib.request.Request(u, method="HEAD" if "releases/download" not in u else "GET", headers={"User-Agent": "ett3-check"})
+            req = urllib.request.Request(u, method="GET" if u.endswith(("/", ".txt")) or "releases/download" in u else "HEAD", headers={"User-Agent": "ett3-check"})
             with urllib.request.urlopen(req, timeout=60) as r:
                 code = r.status
                 body = r.read(200000) if u.endswith(("/", ".txt")) else b""
