@@ -1,0 +1,11 @@
+*.blend
+*.blend1
+*.heic
+*.heif
+*.HEIC
+*.HEIF
+**/keyframes*/
+**/*_keyframes/
+01_src/
+*.zip
+__pycache__/
