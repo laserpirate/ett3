@@ -63,3 +63,10 @@ table.sp tr.tp td{color:var(--proxy);font-style:italic}
 table.sp .tag{display:inline-block;margin-left:4px;padding:0 4px;border:1px solid var(--proxy);font-size:11px;font-style:normal}
 .pole{margin-top:28px;font-size:15px}
 @media (max-width:600px){.nestgrid,.nestgrid .land{grid-template-columns:1fr}}
+.mastv{position:relative}video.mast{object-position:50% 72%}.mast-still{display:none}
+@media (prefers-reduced-motion:reduce){video.mast{display:none}.mast-still{display:block}}
+.list video{display:block;width:100%;height:auto;background:#05070C}
+.vcard{margin:0;border:1px solid var(--rule);background:var(--ground)}
+.vcard video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#05070C}
+.vcard figcaption{padding:8px 10px;font-size:14px}.vcard .strip{display:block;width:100%;height:auto;border-top:1px solid var(--rule)}
+.anim h2{margin-top:34px}.anim .g2{margin-top:14px}
