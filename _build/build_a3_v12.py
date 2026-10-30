@@ -94,6 +94,13 @@ def final(stamp):
            % (mb("ett3-A3_PIN-set_final_v04.pdf"), mb("ett3-A3_REF-set_final_v04.pdf"), href, mb("ett3-A3_PIN-lite_final_v04.zip"), href, mb("ett3-A3_final_package_v04.zip")))
     sec = head + btn + '<div class="grid">\n' + "\n".join(card(k, pngs[k]) for k in TITLES) + "\n</div>"
     t = put(t, "final", sec, "<h2>PIN · submission set")
+    # header: the final is what to open first (the old packet buttons stay, demoted)
+    t = t.replace('<a class="btn main" href="https://github.com/laserpirate/ett3/releases/download/a3-group-packet-v01/ett3-A3_PIN-set_v01.pdf">Submission set (PDF, 12 MB)</a>',
+                  '<a class="btn main" href="files/ett3-A3_PIN-set_final_v04.pdf">Submission PDF (final v04, %.0f MB)</a>' % mb("ett3-A3_PIN-set_final_v04.pdf"))
+    t = t.replace('<a class="btn main" href="https://github.com/laserpirate/ett3/releases/download/a3-group-packet-v01/ett3-A3_group-packet_v01.zip">',
+                  '<a class="btn" href="https://github.com/laserpirate/ett3/releases/download/a3-group-packet-v01/ett3-A3_group-packet_v01.zip">')
+    t = re.sub(r'<p class="status">Packet v06 .*?</p>', '<p class="status">Final PIN set v04, built %s: the Final section below (Submission PDF, REF PDF, PIN-lite zip, editable package). '
+               'The packet v06 material further down is the earlier working set.</p>' % stamp, t, count=1, flags=re.S)
     open(p, "w", encoding="utf-8", newline="\n").write(t)
     # Splat Gallery: framed stills from this run (v20 rule; close row per the exemption)
     g = os.path.join(PAGE, "gsplat", "index.html"); t = open(g, encoding="utf-8").read(); out = os.path.join(PAGE, "gsplat", "framed"); os.makedirs(out, exist_ok=True)
@@ -111,17 +118,19 @@ def final(stamp):
 def atmos():
     g = os.path.join(PAGE, "gsplat", "index.html"); t = open(g, encoding="utf-8").read(); out = os.path.join(PAGE, "gsplat", "atmos"); os.makedirs(out, exist_ok=True)
     cards = []; cs = ""
-    for f in sorted(glob.glob(os.path.join(ATM, "ett3-A3_atmos_*_v01.png"))):
+    for f in sorted(glob.glob(os.path.join(ATM, "ett3-A3_gsplat_atmos_*_v01.png"))):
         n = os.path.splitext(os.path.basename(f))[0]
+        if "contact-sheet" in n:
+            continue
         sz = webp(f, os.path.join(out, n + ".webp"), os.path.join(out, n + "_thumb.webp"))
-        cap = n.replace("ett3-A3_atmos_", "").replace("_v01", "").replace("_", " · ")
+        cap = n.replace("ett3-A3_gsplat_atmos_", "").replace("_v01", "").replace("_", " · ")
         cards.append(shot("atmos/%s.webp" % n, "atmos/%s_thumb.webp" % n, sz, n, cap))
-    c = glob.glob(os.path.join(ATM, "ett3-A3_atmos_contact-sheet_v01.png"))
+    c = glob.glob(os.path.join(ATM, "ett3-A3_gsplat_atmos_contact-sheet_v01.png"))
     if c:
         sz = webp(c[0], os.path.join(out, "ett3-A3_atmos_contact-sheet_v01.webp"), os.path.join(out, "ett3-A3_atmos_contact-sheet_v01_view.webp"), 3000, 2000)
         cs = '<a class="contact" href="atmos/ett3-A3_atmos_contact-sheet_v01.webp" title="Open full size"><img src="atmos/ett3-A3_atmos_contact-sheet_v01_view.webp" alt="Atmos contact sheet" width="%d" height="%d"></a>' % sz
     clip = ""
-    for v in sorted(glob.glob(os.path.join(ATM, "ett3-A3_atmos_*test-clip*_1920*.mp4"))):
+    for v in sorted(glob.glob(os.path.join(ATM, "ett3-A3_gsplat_atmos_*test-clip*_1920*.mp4"))):
         shutil.copy2(v, os.path.join(out, os.path.basename(v)))
         clip += '<video controls muted loop playsinline preload="metadata" width="1920" height="1080" style="width:100%%;height:auto"><source src="atmos/%s" type="video/mp4"></video>' % os.path.basename(v)
     sec = ('<h2>Atmos</h2><p class="older">The aligned splat uncropped, foreground and background blobs kept, depth blur outside a focus band on each shot\'s subject. '
