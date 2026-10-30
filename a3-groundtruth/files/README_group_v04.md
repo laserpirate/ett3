@@ -22,7 +22,7 @@ Public Sans (OFL). Mac: double-click each OTF in `fonts/` > Font Book > Install.
 - Scans of hand drawings: 300 ppi, place on `annot-field` inside the frame.
 
 ## Swap in field data
-Copy `01_src/ett3-A3_field-data_PROXY_v01.csv` to `01_src/ett3-A3_field-data_v01.csv`, type the field values, and change `source` from `proxy` to `field` on each row you replace. Send it to Marko; he re-runs the build and every P mark on that value disappears.
+Copy `01_src/ett3-A3_field-data_PROXY_v01.csv` to `01_src/ett3-A3_field-data_v01.csv`, type the field values, and change `source` from `proxy` to `field` on each row you replace. Send it back to the group; the build is re-run and every P mark on that value disappears.
 
 ## Plant IDs on the Site Photos page
 All are tentative (from keyframes, not checked in the field). The list is in the lane QUESTIONS file; please confirm or correct.

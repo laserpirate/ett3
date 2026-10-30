@@ -20,7 +20,7 @@ Public Sans (OFL). Mac: double-click each OTF in `fonts/` > Install. PC: right-c
 
 ## Editing rules
 - Work on a copy, add your initials: `..._v02_MK.ai`. Never edit `underlay` or `plan` (locked). Draw on `annot-field`.
-- Species: edit `01_src/ett3-A3_species_v01.csv` (send to Marko) when you confirm an ID.
+- Species: edit `01_src/ett3-A3_species_v01.csv` (send to the group) when you confirm an ID.
 
 ## Open slots (numbers match the review PDF)
 | Sheet | What | FIELD | DATA | CONFIRM | CHECK | P |
